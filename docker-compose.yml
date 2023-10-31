@@ -1,0 +1,30 @@
+version: '3'
+
+x-build: &default-build
+  context: .
+  dockerfile: Dockerfile
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=contact_book
+      - POSTGRES_USER=contact_book_user
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - .:/app
+
+  app:
+    build: *default-build
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: [ "./scripts/start.sh" ]
+
+volumes:
+  contact_book:

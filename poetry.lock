@@ -1,0 +1,19 @@
+[[package]]
+name = "asgiref"
+version = "3.4.1"
+
+[[package]]
+name = "Django"
+version = "3.2.7"
+
+[[package]]
+name = "djangorestframework"
+version = "3.12.4"
+
+[[package]]
+name = "pytz"
+version = "2021.1"
+
+[[package]]
+name = "sqlparse"
+version = "0.4.2"
