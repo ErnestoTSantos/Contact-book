@@ -2,7 +2,7 @@
 name = "contact_book"
 version = "0.1.0"
 description = "A Django application for managing contacts."
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Carol", "Ernesto"]
 
 [tool.poetry.dependencies]
 python = "^3.9"

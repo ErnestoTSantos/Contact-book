@@ -1,25 +1,25 @@
-FROM python:3.11.4-slim
+FROM python:3.11-slim
+
+RUN apt update
 
 WORKDIR /app
 
 # Creates an appuser and change the ownership of the application's folder
-RUN useradd appuser \
-    && chown appuser ./
+RUN useradd appuser && chown appuser ./
 
 # Installs poetry and pip
 RUN pip install --upgrade pip && \
-    pip install poetry
+    pip install poetry && \
+    poetry config virtualenvs.create false --local
 
 # Copy dependency definition to cache
 COPY --chown=appuser poetry.lock pyproject.toml ./
-COPY --chown=appuser . ./
 
 # Installs projects dependencies as a separate layer
-RUN poetry export -f requirements.txt -o requirements.txt && \
-    pip uninstall --yes poetry && \
-    pip install --require-hashes -r requirements.txt
+RUN poetry install --no-root
 
-RUN chmod +x ./scripts/*.sh
+# Copies and chowns for the userapp on a single layer
+COPY --chown=appuser . ./
 
 
 EXPOSE 8080
