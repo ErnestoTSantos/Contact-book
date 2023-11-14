@@ -6,8 +6,9 @@ authors = ["Carol", "Ernesto"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-django = "^3.2"
-djangorestframework = "^3.12"
+django = "^4.2"
+djangorestframework = "~3.14"
+psycopg2-binary = "~2.9.9"
 
 [tool.poetry.dev-dependencies]
 

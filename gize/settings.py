@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +21,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'gize.apps.contacts',
+    'gize.apps.user',
 ]
 
 THIRD_PARTY_APPS = [
@@ -63,10 +65,14 @@ WSGI_APPLICATION = 'gize.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "contact_book",
+        "USER": "contact_book_user",
+        "HOST": "db",
+        "PORT": "5432",
+        "PASSWORD": "postgres",
+    },
 }
 
 
