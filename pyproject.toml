@@ -9,6 +9,7 @@ python = "^3.9"
 django = "^4.2"
 djangorestframework = "~3.14"
 psycopg2-binary = "~2.9.9"
+pyjwt = "^2.8.0"
 
 [tool.poetry.dev-dependencies]
 

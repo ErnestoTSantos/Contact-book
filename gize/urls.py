@@ -19,11 +19,14 @@ from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from gize.apps.contacts.views import ContactViewSet
+from gize.apps.user.views import UserInformationViewSet, login_user
 
 api_router_v1 = SimpleRouter()
-api_router_v1.register("contacts", ContactViewSet, basename="contacts")
+api_router_v1.register("contacts", ContactViewSet, basename="contact")
+api_router_v1.register("users", UserInformationViewSet, basename="users")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(api_router_v1.urls)),
+    path('api/v1/login-user/', login_user, name="login-user")
 ]

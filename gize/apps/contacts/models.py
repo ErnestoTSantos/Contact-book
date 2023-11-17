@@ -22,7 +22,7 @@ class Contact(BaseModelInformations):
         ACTIVE = 'Ativo'
         INACTIVE = 'Inativo'
 
-    user_id_ref = models.ForeignKey(UserInformation, on_delete=models.CASCADE, default='')
+    user_id_ref = models.CharField(max_length=50, editable=False)
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100, blank=True, default='')
     email = models.EmailField(max_length=100, blank=True, default='')
@@ -31,6 +31,7 @@ class Contact(BaseModelInformations):
     status = models.CharField(verbose_name="Status", default=Status.ACTIVE, max_length=20, choices=Status.choices)
     phone_type = models.ForeignKey(PhoneType, on_delete=models.SET_NULL, null=True)
     favorite = models.BooleanField(default=False)
+    description = models.TextField(blank=True, default='')
 
     def __str__(self) -> str:
         return f"{self.id} - {self.name}"
