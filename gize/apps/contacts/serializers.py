@@ -1,3 +1,4 @@
+import json
 import re
 
 from rest_framework import serializers
@@ -5,19 +6,10 @@ from rest_framework import serializers
 from gize.apps.contacts.models import Contact, PhoneType
 
 
-class PhoneTypeSerializer(serializers.Serializer):
-    phone_type = serializers.CharField()
-
-    def validate_phone_type(self, phone_type):
-        if phone_type is None:
-            raise serializers.ValidationError('Phone type is required.')
-        
-        phone_type_instance = PhoneType.objects.get(name=phone_type) or None
-
-        if not phone_type_instance:
-            raise serializers.ValidationError('Phone type not found.')
-
-        return phone_type_instance.id
+class PhoneTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PhoneType
+        fields = ('id', 'name',)
 
 
 class ContactSerializers(serializers.ModelSerializer):
@@ -25,7 +17,8 @@ class ContactSerializers(serializers.ModelSerializer):
         model = Contact
         fields = '__all__'
 
-    phone_type = PhoneTypeSerializer(required=True, )
+    phone_type = serializers.CharField(required=True)
+    favorite = serializers.BooleanField(required=False)
     
     def validate_name(self, name):
         if name is None or name == '':
@@ -42,12 +35,15 @@ class ContactSerializers(serializers.ModelSerializer):
         
         if re.sub(r"[^0-9+() -]", "", phone) != phone:
             raise serializers.ValidationError('Phone must be a valid number.')
+        
+        if len(phone) != 11:
+            raise serializers.ValidationError('Phone needs just 11 chars. Ex: dd + 999999999')
 
         return phone
-    
-    def validate_favorite(self, favorite):
-        if favorite is None:
-            raise serializers.ValidationError('Favorite is required.')
-
-        return favorite
+        
+    def validate_phone_type(self, phone_type):
+        try:
+            return PhoneType.objects.get(name=phone_type)
+        except PhoneType.DoesNotExist:
+            raise serializers.ValidationError('Phone type not found.')
     

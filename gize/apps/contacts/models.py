@@ -11,8 +11,7 @@ class BaseModelInformations(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class PhoneType(BaseModelInformations):
-    name = models.CharField(max_length=50)
-    slug = models.SlugField(verbose_name="Slug", unique=True, editable=False)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self) -> str:
         return f"{self.id}"

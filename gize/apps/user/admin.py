@@ -10,8 +10,14 @@ from gize.apps.user.models import UserInformation
 class UserInformationAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'birthday', 'user_id_ref')
     search_fields = ('id', 'name',)
+    readonly_fields = ('id', 'name', 'email', 'birthday', 'password', 'user_id_ref')
     
-    def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
-        if obj:
-            return ('id', 'name', 'email', 'birthday', 'password', 'user_id_ref')
-        return ('id', 'user_id_ref')
+    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
+        extra_context = extra_context or {}
+
+        extra_context["show_save"] = False
+        extra_context["show_save_and_continue"] = False
+        extra_context["show_save_and_add_another"] = False
+        extra_context["show_delete"] = False
+
+        return super().changeform_view(request, object_id, form_url, extra_context)

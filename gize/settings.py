@@ -119,14 +119,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#REST_FRAMEWORK = {
-#    'DEFAULT_PERMISSION_CLASSES': [
-#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#    ],
-#    'DEFAULT_AUTHENTICATION_CLASSES': [
-#        'gize.apps.management.auth.JWTAuthentication',
-#    ]
-#}
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': 180,
