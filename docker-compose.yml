@@ -15,6 +15,11 @@ services:
       - 5432:5432
     volumes:
       - .:/app
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: *default-build
@@ -23,7 +28,8 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: [ "./scripts/start.sh" ]
 
 volumes:

@@ -4,7 +4,6 @@ RUN apt update
 
 WORKDIR /app
 
-# Creates an appuser and change the ownership of the application's folder
 RUN useradd appuser && chown appuser ./
 
 # Installs poetry and pip
@@ -15,14 +14,10 @@ RUN pip install --upgrade pip && \
 # Copy dependency definition to cache
 COPY --chown=appuser poetry.lock pyproject.toml ./
 
-# Installs projects dependencies as a separate layer
 RUN poetry install --no-root
 
-# Copies and chowns for the userapp on a single layer
 COPY --chown=appuser . ./
-
 
 EXPOSE 8080
 
-# Switching to the non-root appuser for security
 USER appuser

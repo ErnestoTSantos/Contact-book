@@ -15,8 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import SimpleRouter
+
+from gize.apps.contacts.views import ContactViewSet, PhoneTypeView
+from gize.apps.user.views import UserInformationViewSet, login_user
+
+api_router_v1 = SimpleRouter()
+api_router_v1.register("contacts", ContactViewSet, basename="contact")
+api_router_v1.register("users", UserInformationViewSet, basename="users")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', include(api_router_v1.urls)),
+    path('api/v1/login-user/', login_user, name="login-user"),
+    path('api/v1/phone-type/', PhoneTypeView.as_view(), name="phone-type")
 ]
