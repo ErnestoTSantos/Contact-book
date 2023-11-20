@@ -34,12 +34,12 @@ class UserInformationViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_201_CREATED)
     
     def patch(self, request):
-        authenticate_user(request)
+        user_instance = authenticate_user(request)
 
         serializer = UserInformationCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        UserInformation.objects.update(**serializer.validated_data)
+        UserInformation.objects.update(user_id_ref=user_instance, **serializer.validated_data)
 
         return Response(status=status.HTTP_200_OK)
 
