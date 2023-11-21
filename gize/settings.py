@@ -11,6 +11,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
+CSRF_TRUSTED_ORIGINS = ['https://ed53-45-181-174-10.ngrok-free.app']
+
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,7 +29,9 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_swagger',
+    'drf_yasg'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
